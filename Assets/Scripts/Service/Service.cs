@@ -6,6 +6,11 @@ namespace Service
 {
     public abstract class Service : ScriptableObject
     {
-        [HideInInspector] public UnityEvent<EventArgs> _event;
+        protected UnityEvent<EventArgs> _event;
+
+        protected virtual void OnEnable()
+        {
+            if (_event == null) _event = new UnityEvent<EventArgs>();
+        }
     }
 }
