@@ -26,7 +26,7 @@ public class GameControllerTests
         public int eventT = 0;
         public int numEndConsumeCalled = 0;
         
-        protected override void OnEnable()
+        protected override void Start()
         {
             //do nothing
         }

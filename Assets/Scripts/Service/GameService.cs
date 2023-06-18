@@ -10,6 +10,7 @@ namespace Service
     public class GameService : Service, IConsumer, IProducer, Initializable
     {
         protected bool isInitialized;
+        private EventArgs _eventArgs;
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -32,7 +33,23 @@ namespace Service
         public void Initialize()
         {
             GameServiceStart gameServiceStart = new GameServiceStart();
-            _event?.Invoke(gameServiceStart);
+            InvokeEvent(gameServiceStart);
+        }
+
+        private void InvokeEvent(EventArgs args)
+        {
+            _event?.Invoke(args);
+            SetEvent(args);
+        }
+
+        private void SetEvent(EventArgs args)
+        {
+            _eventArgs = args;
+        }
+
+        public EventArgs GetEvent()
+        {
+            return _eventArgs;
         }
     }
 }
