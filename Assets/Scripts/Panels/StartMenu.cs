@@ -5,8 +5,9 @@ namespace Panels
 {
     public class StartMenu : Panel
     {
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             eventArg = new GameServiceStart();
         }
     }

@@ -9,7 +9,7 @@ namespace Controllers
     public class UIController : Controller
     {
         public static UIController Instance { get; private set; }
-        private Dictionary<System.Type, List<GameObject>> typePanelDictionary;
+        protected Dictionary<System.Type, List<GameObject>> typePanelDictionary;
 
         private void Awake()
         {
@@ -27,7 +27,7 @@ namespace Controllers
             panelList.Add(panel.gameObject);
         }
 
-        private void Respond(Type type)
+        protected void Respond(Type type)
         {
             foreach (var typeKey in typePanelDictionary.Keys)
             {

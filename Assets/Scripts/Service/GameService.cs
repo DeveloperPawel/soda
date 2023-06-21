@@ -15,7 +15,7 @@ namespace Service
         {
             base.OnEnable();
             Initialize();
-            isInitialized = true;
+            Init?.Invoke();
         }
 
         public void EventUpdate(EventArgs args)
@@ -23,17 +23,19 @@ namespace Service
             // update the service
         }
 
-        public void Subscribe(IProducer producer)
+        public virtual void Subscribe(IProducer producer)
         {
             producer.Event.AddListener(EventUpdate);
         }
 
         public UnityEvent<EventArgs> Event => _event;
+        public event Action Init;
         public bool Initialized => isInitialized;
         public void Initialize()
         {
             GameServiceStart gameServiceStart = new GameServiceStart();
             InvokeEvent(gameServiceStart);
+            isInitialized = true;
         }
 
         private void InvokeEvent(EventArgs args)

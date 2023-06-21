@@ -18,11 +18,11 @@ namespace Controllers
             {
                 EventUpdate(gameService.GetEvent());
             }
-        }
 
-        protected virtual void OnEnable()
-        {
-            
+            gameService.Init += () =>
+            {
+                EventUpdate(gameService.GetEvent());
+            };
         }
 
         public virtual void EventUpdate(EventArgs args)

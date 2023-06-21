@@ -5,8 +5,9 @@ namespace Panels
 {
     public class EndMenu : Panel
     {
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             eventArg = new GameServiceEnd();
         }
     }
