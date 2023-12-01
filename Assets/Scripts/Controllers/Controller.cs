@@ -30,6 +30,11 @@ namespace Controllers
             Type type = args.GetType();
             var signature = new[] {type};
             MethodInfo methodInfo = GetType().GetMethod("Consume", signature);
+            if (methodInfo == null)
+            {
+                Debug.Log($"could not find handler for {args.GetType()}");
+                return;
+            }
             methodInfo.Invoke(this, new[] {args});
         }
 

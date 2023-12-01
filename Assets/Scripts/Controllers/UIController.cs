@@ -10,11 +10,17 @@ namespace Controllers
     {
         public static UIController Instance { get; private set; }
         protected Dictionary<System.Type, List<GameObject>> typePanelDictionary;
+        private int panelCount;
+        protected EventArgs initialEvent;
+        protected bool newAdd;
+        private bool panelFlag = true;
 
         private void Awake()
         {
             Instance = this;
             typePanelDictionary = new Dictionary<Type, List<GameObject>>();
+            Panel[] panels = FindObjectsOfType<Panel>();
+            panelCount = panels.Length;
         }
 
         public void Register(Type type, Panel panel)
@@ -44,10 +50,31 @@ namespace Controllers
                     go.SetActive(false);
                 }
             }
+            
+            if (initialEvent != null)
+            {
+                newAdd = true;
+            }
+        }
+        
+        private void LateUpdate()
+        {
+            if (newAdd)
+            {
+                Respond(initialEvent.GetType());
+                newAdd = false;
+            }
+
+            if (panelCount == typePanelDictionary.Count && panelFlag)
+            {
+                initialEvent = null;
+                panelFlag = false;
+            }
         }
         
         public override void Consume(GameServiceStart gameServiceStart)
         {
+            initialEvent = gameServiceStart;
             Respond(gameServiceStart.GetType());
         } 
         
